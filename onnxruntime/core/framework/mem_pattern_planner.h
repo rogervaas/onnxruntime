@@ -39,9 +39,9 @@ class MemPatternPlanner {
       return;
     }
 
-    size_t current = 0;
+    SafeInt<size_t> current = 0;
     size_t waste_bytes = std::numeric_limits<size_t>::max();
-    size_t best_offset = 0;
+    SafeInt<size_t> best_offset = 0;
     if (!blocks_.empty()) {
       auto last_block = allocs_[*blocks_.rbegin()];
       best_offset = last_block.block_.offset_ + last_block.block_.size_;
@@ -61,7 +61,7 @@ class MemPatternPlanner {
     }
 
     allocs_.emplace_back(ml_value_idx, MemoryBlock(best_offset, size));
-    buffer_size = std::max(buffer_size, best_offset + size);
+    buffer_size_ = std::max(buffer_size_, best_offset + size);
     blocks_.insert(best_fit_it, (static_cast<int>(allocs_.size()) - 1));
   }
 
@@ -80,7 +80,7 @@ class MemPatternPlanner {
     std::lock_guard<OrtMutex> lock(lock_);
 
     MemoryPattern pattern;
-    pattern.peak_size_ = buffer_size;
+    pattern.peak_size_ = buffer_size_;
     for (auto& alloc : allocs_) {
       pattern.patterns_[alloc.index_] = alloc.block_;
     }
@@ -100,7 +100,7 @@ class MemPatternPlanner {
   std::vector<OrtValueAllocationBlock> allocs_;
   // blocks_ the list of currently allocated memory blocks, sorted in order of their offset
   std::list<int> blocks_;
-  size_t buffer_size{0};
+  SafeInt<size_t> buffer_size_{0};
   mutable OrtMutex lock_;
 };
 

@@ -377,7 +377,7 @@ static Status AllocateTraditionalMLValue(OrtValue& ort_value, const NonTensorTyp
   return Status::OK();
 }
 
-static Status AllocateTensorSequence (OrtValue& ort_value) {
+static Status AllocateTensorSequence(OrtValue& ort_value) {
   auto ml_tensor_sequence = DataTypeImpl::GetType<TensorSeq>();
   auto p_tensor_sequence = onnxruntime::make_unique<TensorSeq>();
   ort_value.Init(p_tensor_sequence.release(), ml_tensor_sequence, ml_tensor_sequence->GetDeleteFunc());

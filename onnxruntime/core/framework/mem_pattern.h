@@ -3,11 +3,12 @@
 
 #pragma once
 #include "core/common/common.h"
+#include "core/common/SafeInt.h"
 #include "core/framework/allocation_planner.h"
 
 namespace onnxruntime {
 struct MemoryBlock {
-  size_t offset_{0};
+  SafeInt<size_t> offset_{0};
   size_t size_{0};
 
   MemoryBlock() = default;
@@ -47,7 +48,7 @@ class MemoryPattern {
   ORT_DISALLOW_COPY_AND_ASSIGNMENT(MemoryPattern);
 
   std::unordered_map<int, MemoryBlock> patterns_;
-  size_t peak_size_{0};
+  SafeInt<size_t> peak_size_{0};
 };
 
 struct MemoryPatternGroup {

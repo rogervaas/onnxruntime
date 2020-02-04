@@ -120,8 +120,10 @@ Status Attention<T>::Compute(OpKernelContext* context) const {
   AllocatorPtr allocator;
   ORT_RETURN_IF_ERROR(context->GetTempSpaceAllocator(&allocator));
 
-  // STEP.1: gemm_data(BS, 3NH) = input(BS, NH) x weights(NH, 3NH) + bias(3NH)
-  auto gemm_data = allocator->Alloc(batch_size * sequence_length * 3 * hidden_size * element_size);
+  FIXME - all calls to Alloc from operators(lots in contrib_ops) need to use SafeInt
+
+      // STEP.1: gemm_data(BS, 3NH) = input(BS, NH) x weights(NH, 3NH) + bias(3NH)
+      auto gemm_data = allocator->Alloc(batch_size * sequence_length * 3 * hidden_size * element_size);
   BufferUniquePtr gemm_buffer(gemm_data, BufferDeleter(allocator));
   auto Q = reinterpret_cast<T*>(gemm_data);
   auto K = Q + batch_size * sequence_length * hidden_size;

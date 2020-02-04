@@ -4,6 +4,7 @@
 #include "core/framework/tensor.h"
 
 #include <utility>
+#include "core/common/SafeInt.h"
 #include "core/framework/allocatormgr.h"
 #include "core/framework/data_types.h"
 
@@ -25,7 +26,7 @@ Tensor::Tensor(MLDataType p_type, const TensorShape& shape, std::shared_ptr<IAll
 
   void* p_data = nullptr;
   if (shape_size > 0) {
-    size_t len = 0;
+    SafeInt<size_t> len = 0;
     if (!allocator->CalcMemSizeForArray(static_cast<size_t>(shape_size), p_type->Size(), &len))
       ORT_THROW("tensor failed memory size calculation");
     len += offset;

@@ -233,6 +233,9 @@ bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, siz
   static constexpr size_t max_size = std::numeric_limits<size_t>::max() - alignment;
   static constexpr size_t alignment_mask = alignment - 1;
 
+  // TODO: Can this be simplified by using SafeInt instead of doing all the manual calculations?
+  // Alternative might just be to put size in a SafeInt<size_t> and do the two calculations from line 249 on.
+
   //Indeed, we only need to check if max_size / nmemb < size
   //max_allowed is for avoiding unnecessary DIV.
   if (nmemb >= max_allowed && max_size / nmemb < size) {
