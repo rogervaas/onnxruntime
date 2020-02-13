@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "core/providers/cpu/tensor/upsample.h"
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include <sstream>
 
 using namespace onnxruntime::common;

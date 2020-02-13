@@ -3,7 +3,7 @@
 
 #include "layer_norm.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/framework/tensor.h"
 #include "core/platform/threadpool.h"
 #include "core/providers/common.h"

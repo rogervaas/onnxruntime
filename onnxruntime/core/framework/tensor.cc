@@ -4,7 +4,7 @@
 #include "core/framework/tensor.h"
 
 #include <utility>
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/framework/allocatormgr.h"
 #include "core/framework/data_types.h"
 

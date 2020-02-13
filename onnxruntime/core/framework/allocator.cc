@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/framework/allocator.h"
 #include "core/framework/allocatormgr.h"
 #include "core/framework/utils.h"
@@ -13,10 +13,10 @@ namespace onnxruntime {
 
 // private helper for calculation so SafeInt usage doesn't bleed into the public allocator.h header
 bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out) {
-  SafeInt<size_t> alloc_size(size);
   bool ok = true;
 
   try {
+    SafeInt<size_t> alloc_size(size);
     if (alignment == 0) {
       *out = alloc_size * nmemb;
     } else {

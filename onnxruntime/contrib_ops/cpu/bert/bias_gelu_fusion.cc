@@ -1,6 +1,6 @@
 #include "bias_gelu_fusion.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/mlas/inc/mlas.h"
 #include "core/platform/threadpool.h"
 #include "core/util/math_cpuonly.h"

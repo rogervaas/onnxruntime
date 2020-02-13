@@ -10,7 +10,7 @@
 #include "core/providers/cpu/math/gemm_helper.h"
 #include "core/providers/cpu/math/softmax.h"
 #include "core/providers/cpu/tensor/transpose.h"
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 
 namespace onnxruntime {
 namespace contrib {

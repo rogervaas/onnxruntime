@@ -4,7 +4,7 @@
 #include "core/session/onnxruntime_c_api.h"
 #include "core/session/ort_apis.h"
 #include "core/common/status.h"
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/framework/error_code_helper.h"
 #include <cassert>
 using onnxruntime::common::Status;

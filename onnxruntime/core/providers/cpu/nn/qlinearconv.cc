@@ -3,7 +3,7 @@
 
 #include "core/providers/cpu/nn/qlinearconv.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"
 #include "core/providers/common.h"

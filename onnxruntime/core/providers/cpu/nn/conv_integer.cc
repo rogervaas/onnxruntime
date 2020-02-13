@@ -3,7 +3,7 @@
 
 #include "core/providers/cpu/nn/conv_integer.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/providers/common.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"

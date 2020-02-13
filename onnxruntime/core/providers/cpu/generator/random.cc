@@ -29,7 +29,7 @@ limitations under the License.
 #include <chrono>
 #include <random>
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/util/math_cpuonly.h"
 #include "core/util/eigen_common_wrapper.h"
 #include "gsl/gsl"

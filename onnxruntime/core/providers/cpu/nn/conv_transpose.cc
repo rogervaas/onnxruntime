@@ -17,7 +17,7 @@
 
 #include "core/providers/cpu/nn/conv_transpose.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"
 

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #include "core/framework/op_kernel_context_internal.h"
 
-#include "core/common/SafeInt.h"
+#include "core/common/safeint.h"
 #include "core/providers/cpu/rnn/rnn.h"
 #include "core/providers/cpu/rnn/rnn_activation_functors.h"
 #include "core/providers/cpu/rnn/rnn_helpers.h"
