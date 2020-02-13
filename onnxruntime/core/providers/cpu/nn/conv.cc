@@ -15,9 +15,8 @@
 */
 /* Modifications Copyright (c) Microsoft. */
 
-#include "core/providers/cpu/nn/conv.h"
-
 #include "core/common/safeint.h"
+#include "core/providers/cpu/nn/conv.h"
 #include "core/util/math_cpuonly.h"
 
 namespace onnxruntime {

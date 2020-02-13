@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "core/providers/cpu/nn/conv_integer.h"
-
 #include "core/common/safeint.h"
 #include "core/providers/common.h"
+#include "core/providers/cpu/nn/conv_integer.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"
 #include "core/util/qmath.h"

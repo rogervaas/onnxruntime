@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "core/providers/cpu/nn/qlinearconv.h"
-
 #include "core/common/safeint.h"
+#include "core/providers/common.h"
+#include "core/providers/cpu/nn/qlinearconv.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"
-#include "core/providers/common.h"
 
 namespace onnxruntime {
 ONNX_OPERATOR_KERNEL_EX(

@@ -15,9 +15,8 @@
 */
 /* Modifications Copyright (c) Microsoft. */
 
-#include "core/providers/cpu/nn/lrn.h"
-
 #include "core/common/safeint.h"
+#include "core/providers/cpu/nn/lrn.h"
 #include "core/util/math.h"
 #include "core/util/math_cpuonly.h"
 

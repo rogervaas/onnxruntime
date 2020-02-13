@@ -22,7 +22,6 @@ class SafeIntExceptionHandler<onnxruntime::OnnxRuntimeException> {
   }
 };
 
-// Add two #defines so that failure throws, and it throws OnnxRuntimeException so it's caught by existing handlers
 #define SAFEINT_EXCEPTION_HANDLER_CPP 1
 #define SafeIntDefaultExceptionHandler SafeIntExceptionHandler<onnxruntime::OnnxRuntimeException>
 #include "safeint/SafeInt.hpp"
