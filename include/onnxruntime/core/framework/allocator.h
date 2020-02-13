@@ -176,6 +176,7 @@ class IAllocator {
    */
   template <size_t alignment>
   static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept ORT_MUST_USE_RESULT;
+
   /**
    * allocate memory for an array which has nmemb items of data, each size bytes long
    */
@@ -225,34 +226,14 @@ class IAllocator {
         static_cast<T*>(allocator->Alloc(alloc_size)),  // allocate
         [=](T* ptr) { allocator->Free(ptr); }};         // capture IAllocator so it's always valid, and use as deleter
   }
+
+ private:
+  static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out);
 };
 
 template <size_t alignment>
 bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept {
-  static constexpr size_t max_allowed = (size_t(1) << (size_t(std::numeric_limits<size_t>::digits >> 1))) - alignment;
-  static constexpr size_t max_size = std::numeric_limits<size_t>::max() - alignment;
-  static constexpr size_t alignment_mask = alignment - 1;
-
-  // TODO: Can this be simplified by using SafeInt instead of doing all the manual calculations?
-  // Alternative might just be to put size in a SafeInt<size_t> and do the two calculations from line 249 on.
-
-  //Indeed, we only need to check if max_size / nmemb < size
-  //max_allowed is for avoiding unnecessary DIV.
-  if (nmemb >= max_allowed && max_size / nmemb < size) {
-    return false;
-  }
-
-  if (size >= max_allowed &&
-      nmemb > 0 && max_size / nmemb < size) {
-    return false;
-  }
-
-  if (alignment == 0)
-    *out = size * nmemb;
-  else
-    *out = (size * nmemb + alignment_mask) & ~static_cast<size_t>(alignment_mask);
-
-  return true;
+  return CalcMemSizeForArrayWithAlignment(nmemb, size, alignment, out);
 }
 
 /**

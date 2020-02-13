@@ -49,3 +49,6 @@
 [submodule "cmake/external/FeaturizersLibrary"]
 	path = cmake/external/FeaturizersLibrary
 	url = https://github.com/microsoft/FeaturizersLibrary.git
+[submodule "cmake/external/SafeInt/safeint"]
+	path = cmake/external/SafeInt/safeint
+	url = https://github.com/dcleblanc/SafeInt.git

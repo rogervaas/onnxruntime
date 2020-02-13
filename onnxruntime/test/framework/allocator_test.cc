@@ -79,5 +79,25 @@ TEST(AllocatorTest, MakeUniquePtrTest) {
   auto void_ptr = IAllocator::MakeUniquePtr<void>(allocator, 16);
   void_ptr = nullptr;
 }
+
+TEST(AllocatorTest, TestOverflowChecks) {
+  size_t size;
+  size_t element_size = sizeof(float);
+  size_t num_elements = std::numeric_limits<size_t>::max() / element_size;
+
+  ASSERT_TRUE(IAllocator::CalcMemSizeForArrayWithAlignment<0>(num_elements, element_size, &size));
+  ASSERT_FALSE(IAllocator::CalcMemSizeForArrayWithAlignment<0>(num_elements + 1, element_size, &size));
+
+  ASSERT_TRUE(IAllocator::CalcMemSizeForArrayWithAlignment<64>(num_elements, element_size, &size));
+  ASSERT_FALSE(IAllocator::CalcMemSizeForArrayWithAlignment<64>(num_elements + 1, element_size, &size));
+
+  element_size = std::numeric_limits<size_t>::max() / 5;
+  num_elements = 6;
+
+  ASSERT_TRUE(IAllocator::CalcMemSizeForArrayWithAlignment<0>(num_elements, element_size, &size));
+  ASSERT_FALSE(IAllocator::CalcMemSizeForArrayWithAlignment<0>(num_elements + 1, element_size, &size));
+  ASSERT_TRUE(IAllocator::CalcMemSizeForArrayWithAlignment<64>(num_elements, element_size, &size));
+  ASSERT_FALSE(IAllocator::CalcMemSizeForArrayWithAlignment<64>(num_elements + 1, element_size, &size));
+}
 }  // namespace test
 }  // namespace onnxruntime
