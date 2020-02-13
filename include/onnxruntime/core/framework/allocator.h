@@ -163,19 +163,33 @@ class IAllocator {
   virtual FencePtr CreateFence(const SessionState* /*unused*/) { return nullptr; }
 
   static bool CalcMemSizeForArray(size_t nmemb, size_t size, size_t* out) noexcept {
-    return CalcMemSizeForArrayWithAlignment<0>(nmemb, size, out);
+    return CalcMemSizeForArrayWithAlignment(nmemb, size, 0, out);
   }
+
+  /**
+  * Calculate the memory size for an array. The size is bounds checked using SafeInt. 
+   * \tparam alignment must be power of 2
+   * \param nmemb Number of members/elements in the array
+   * \param size Size of each element
+   * \param out Total size required after any alignment is applied
+   * \return true, successful. false, overflow
+   */
+  static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out);
 
   /**
    * https://cwe.mitre.org/data/definitions/190.html
    * \tparam alignment must be power of 2
-   * \param nmemb
-   * \param size
-   * \param out
+   * \param nmemb Number of members/elements in the array
+   * \param size Size of each element
+   * \param out Total size required after any alignment is applied
    * \return true, successful. false, overflow
+   * \remarks This was the original API and was implemented in the header. Replaced with the above version 
+   *          implemented in the .cc file so that the SafeInt dependency is internal.
    */
   template <size_t alignment>
-  static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept ORT_MUST_USE_RESULT;
+  static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept ORT_MUST_USE_RESULT {
+    return CalcMemSizeForArrayWithAlignment(nmemb, size, alignment, out);
+  }
 
   /**
    * allocate memory for an array which has nmemb items of data, each size bytes long
@@ -193,7 +207,7 @@ class IAllocator {
   template <size_t alignment>
   void* AllocArrayWithAlignment(size_t nmemb, size_t size) {
     size_t len;
-    if (!CalcMemSizeForArrayWithAlignment<alignment>(nmemb, size, &len))
+    if (!CalcMemSizeForArrayWithAlignment(nmemb, size, alignment, &len))
       return nullptr;
     return Alloc(len);
   }
@@ -226,15 +240,7 @@ class IAllocator {
         static_cast<T*>(allocator->Alloc(alloc_size)),  // allocate
         [=](T* ptr) { allocator->Free(ptr); }};         // capture IAllocator so it's always valid, and use as deleter
   }
-
- private:
-  static bool CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out);
 };
-
-template <size_t alignment>
-bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept {
-  return CalcMemSizeForArrayWithAlignment(nmemb, size, alignment, out);
-}
 
 /**
    The resource allocator on a physical device.
