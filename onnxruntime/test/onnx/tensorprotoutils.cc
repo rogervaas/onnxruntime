@@ -271,7 +271,7 @@ Status GetSizeInBytesFromTensorProto(const ONNX_NAMESPACE::TensorProto& tensor_p
     if (dim < 0 || static_cast<uint64_t>(dim) >= std::numeric_limits<size_t>::max()) {
       return Status(common::ONNXRUNTIME, common::INVALID_ARGUMENT, "Invalid TensorProto");
     }
-    if (CalcMemSizeForArrayWithAlignment(size, static_cast<size_t>(dim), 0, &size)) {
+    if (!CalcMemSizeForArrayWithAlignment(size, static_cast<size_t>(dim), 0, &size)) {
       return Status(common::ONNXRUNTIME, common::INVALID_ARGUMENT, "Invalid TensorProto");
     }
   }
@@ -447,8 +447,8 @@ Status TensorProtoToMLValue(const onnx::TensorProto& tensor_proto, const MemBuff
   value = Ort::Value::CreateTensor(&allocator, tensor_data, m.GetLen(), tensor_shape_vec.data(), tensor_shape_vec.size(), (ONNXTensorElementDataType)tensor_proto.data_type());
   return Status::OK();
 }
-template Status GetSizeInBytesFromTensorProto<256>(const onnx::TensorProto& tensor_proto,
-                                                   size_t* out);
+
+template Status GetSizeInBytesFromTensorProto<256>(const onnx::TensorProto& tensor_proto, size_t* out);
 template Status GetSizeInBytesFromTensorProto<0>(const onnx::TensorProto& tensor_proto, size_t* out);
 }  // namespace test
 }  // namespace onnxruntime
