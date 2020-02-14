@@ -12,7 +12,7 @@
 namespace onnxruntime {
 
 // private helper for calculation so SafeInt usage doesn't bleed into the public allocator.h header
-bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out) {
+bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t alignment, size_t* out) noexcept {
   bool ok = true;
 
   try {
