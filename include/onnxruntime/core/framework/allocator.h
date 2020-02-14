@@ -241,7 +241,7 @@ class IAllocator {
 };
 
 template <size_t alignment>
-static bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept {
+bool IAllocator::CalcMemSizeForArrayWithAlignment(size_t nmemb, size_t size, size_t* out) noexcept {
   return CalcMemSizeForArrayWithAlignment(nmemb, size, alignment, out);
 }
 
