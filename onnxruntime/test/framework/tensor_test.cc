@@ -206,9 +206,9 @@ TEST(TensorTest, SizeOverflow) {
   TensorShape shape1({static_cast<int64_t>(std::numeric_limits<size_t>::max() / 3)});
   EXPECT_THROW(Tensor(type, shape1, alloc), OnnxRuntimeException);
 
-  // overflow due to offset. max/4 from shape, *4 from float size, + 1 from offset
-  TensorShape shape2({static_cast<int64_t>(std::ceil(std::numeric_limits<size_t>::max() / 4))});
-  ptrdiff_t offset = 1;
+  // overflow due to offset. max/4 from shape, *4 from float size, + 4 from offset
+  TensorShape shape2({static_cast<int64_t>(std::numeric_limits<size_t>::max() / 4)});
+  ptrdiff_t offset = sizeof(float);  // one more element to push past max
   EXPECT_THROW(Tensor(type, shape2, alloc, offset), OnnxRuntimeException);
 }
 }  // namespace test
