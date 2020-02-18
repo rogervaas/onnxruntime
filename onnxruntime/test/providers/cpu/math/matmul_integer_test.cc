@@ -32,6 +32,17 @@ TEST(MatmulIntegerOpTest, MatMulInteger) {
   test.AddOutput<int32_t>("T3", {1, 1}, {-1});
   test.Run();
 }
+
+TEST(MatmulIntegerOpTest, MatMulInteger_int8_t) {
+  OpTester test("MatMulInteger", 10);
+  test.AddInput<int8_t>("T1", {1, 1}, {11});
+  test.AddInput<int8_t>("T2", {1, 1}, {13});
+  test.AddInput<int8_t>("a_zero_point", {}, {12});
+  test.AddInput<int8_t>("b_zero_point", {}, {12});
+  test.AddOutput<int32_t>("T3", {1, 1}, {-1});
+  test.Run();
+}
+
 TEST(MatmulIntegerOpTest, MatMulInteger_WithZero_ZeroPoint) {
   OpTester test("MatMulInteger", 10);
   test.AddInput<uint8_t>("T1", {4, 3}, {11, 7, 3, 10, 6, 2, 9, 5, 1, 8, 4, 0});
